@@ -1,21 +1,72 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import logo from './logo.svg'
+import './App.css'
+import { AuthAdapter } from './adapters'
+import LoginForm from './components/LoginForm'
+import DevicesContainer from './containers/DevicesContainer'
+import NavBar from './components/NavBar'
 
 class App extends Component {
+  constructor(){
+    super()
+    this.state = {
+      auth: {
+        isLoggedIn: false,
+        user: {}
+      }
+    }
+    this.login = this.login.bind(this)
+  }
+
+  login(params){
+    AuthAdapter.login(params)
+      .then(user => {
+        if(!user.error){
+          this.setState({
+            auth: {
+              isLoggedIn: true,
+              user: user
+            }
+          })
+          localStorage.setItem('jwt', user.jwt)
+        }
+      })
+  }
+
+  logout(){
+    localStorage.clear()
+    this.setState({
+      auth: {
+        isLoggedIn: false,
+        user: {}
+      }
+    })
+  }
+
+  componentDidMount(){
+    if(!!localStorage.getItem('jwt')){
+      AuthAdapter.currentUser()
+        .then(user => {
+          if(!user.error){
+            this.setState({
+              auth: {
+                isLoggedIn: true,
+                user: user
+              }
+            })
+          }
+        })
+    }
+  }
+
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <NavBar isLoggedIn={this.state.auth.isLoggedIn} logout={this.logout} />
+        {this.state.auth.isLoggedIn ? <DevicesContainer user={this.state.auth.user} /> : <LoginForm onSubmit={this.login} /> }
       </div>
     );
   }
 }
 
-export default App;
+export default App
