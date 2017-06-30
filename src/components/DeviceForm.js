@@ -3,10 +3,14 @@ import React, { Component } from 'react'
 export default class DeviceForm extends Component {
   constructor(props){
     super(props)
-    this.state = {
-      device_name: '',
-      password: '',
-      password_confirmation: ''
+    if (this.props.device){
+      this.state = this.props.device
+    } else {
+      this.state = {
+        device_name: '',
+        password: '',
+        password_confirmation: ''
+      }
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -30,7 +34,7 @@ export default class DeviceForm extends Component {
 
   render(){
     return (
-      <form>
+      <form onSubmit={this.handleSubmit}>
         <label>Device ID</label>
         <input type="text" name="device_name" value={this.state.device_name} onChange={this.handleChange} /><br/>
         <label>Device Key</label>

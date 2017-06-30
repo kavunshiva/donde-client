@@ -29,29 +29,35 @@ export class DevicesAdapter {
     }).then(res => res.json())
   }
 
+  static getPositions(device){
+    return fetch(`${baseUrl}/devices/${device.id}/positions`, {
+      headers: headers
+    }).then(res => res.json())
+  }
+
   static create(device){
     return fetch(`${baseUrl}/devices`,{
-      method: 'post',
+      method: 'POST',
       headers: headers,
-      body: JSON.stringify(device)
+      body: JSON.stringify({device: device})
     })
       .then(res => res.json())
   }
 
   static update(device){
     return fetch(`${baseUrl}/devices/${device.id}`,{
-      method: 'patch',
+      method: 'PATCH',
       headers: headers,
-      body: JSON.stringify(device)
+      body: JSON.stringify({device: device})
     })
       .then(res => res.json())
   }
 
   static destroy(device){
     return fetch(`${baseUrl}/devices/${device.id}`,{
-      method: 'delete',
+      method: 'DELETE',
       headers: headers,
-      body: JSON.stringify(device)
+      body: JSON.stringify({device: device})
     })
       .then(res => res.json())
   }

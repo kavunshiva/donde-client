@@ -11,6 +11,7 @@ export default class DevicesContainer extends Component {
     this.createDevice = this.createDevice.bind(this)
     this.updateDevice = this.updateDevice.bind(this)
     this.deleteDevice = this.deleteDevice.bind(this)
+    // this.getPositions = this.getPositions.bind(this)
   }
 
   componentDidMount(){
@@ -19,6 +20,23 @@ export default class DevicesContainer extends Component {
         devices: devices
       }))
   }
+
+  // getPositions(d){
+  //   DevicesAdapter.getPositions(d)
+  //     .then(positions => {
+  //       const devices = this.state.devices.map(device => {
+  //         if(device.id === d.id){
+  //           d.positions = positions
+  //           return d
+  //         } else {
+  //           return device
+  //         }
+  //       })
+  //       this.setState({
+  //         devices: devices
+  //       })
+  //     })
+  // }
 
   createDevice(device){
     device.user_id = this.props.user.id
@@ -33,6 +51,7 @@ export default class DevicesContainer extends Component {
   }
 
   updateDevice(device){
+    device.user_id = this.props.user.id
     DevicesAdapter.update(device)
       .then(updatedDevice => {
         if(!device.error){
@@ -52,16 +71,18 @@ export default class DevicesContainer extends Component {
       })
   }
 
-  deleteDevice(destroyedDevice){
-    DevicesAdapter.destroy(destroyedDevice)
-      .then(this.setState(() => {
-        const devices = this.state.devices.filter(device => {
-          device.id !== destroyedDevice.id
+  deleteDevice(device){
+    DevicesAdapter.destroy(device)
+      .then(destroyedDevice => {
+          this.setState(() => {
+            const devices = this.state.devices.filter(device => {
+              device.id !== destroyedDevice.id
+            })
+            return {
+              devices: devices
+            }
+          })
         })
-        return {
-          devices: devices
-        }
-      }))
   }
 
   render(){
