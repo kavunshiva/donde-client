@@ -11,7 +11,7 @@ export default class DevicesContainer extends Component {
     this.createDevice = this.createDevice.bind(this)
     this.updateDevice = this.updateDevice.bind(this)
     this.deleteDevice = this.deleteDevice.bind(this)
-    // this.getPositions = this.getPositions.bind(this)
+    this.getPositions = this.getPositions.bind(this)
   }
 
   componentDidMount(){
@@ -21,22 +21,22 @@ export default class DevicesContainer extends Component {
       }))
   }
 
-  // getPositions(d){
-  //   DevicesAdapter.getPositions(d)
-  //     .then(positions => {
-  //       const devices = this.state.devices.map(device => {
-  //         if(device.id === d.id){
-  //           d.positions = positions
-  //           return d
-  //         } else {
-  //           return device
-  //         }
-  //       })
-  //       this.setState({
-  //         devices: devices
-  //       })
-  //     })
-  // }
+  getPositions(d){
+    DevicesAdapter.getPositions(d)
+      .then(positions => {
+        const devices = this.state.devices.map(device => {
+          if(device.id === d.id){
+            d.positions = positions
+            return d
+          } else {
+            return device
+          }
+        })
+        this.setState({
+          devices: devices
+        })
+      })
+  }
 
   createDevice(device){
     device.user_id = this.props.user.id
@@ -54,7 +54,7 @@ export default class DevicesContainer extends Component {
     device.user_id = this.props.user.id
     DevicesAdapter.update(device)
       .then(updatedDevice => {
-        if(!device.error){
+        if(!updatedDevice.error){
           this.setState(() => {
             const devices = this.state.devices.map(device => {
               if(device.id === updatedDevice.id){
@@ -90,6 +90,7 @@ export default class DevicesContainer extends Component {
       <div>
         <DevicesPage user={this.props.user}
                   devices={this.state.devices}
+                  getPositions={this.getPositions}
                   createDevice={this.createDevice}
                   updateDevice={this.updateDevice}
                   deleteDevice={this.deleteDevice} />

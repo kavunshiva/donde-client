@@ -21,7 +21,7 @@ class App extends Component {
   login(params){
     AuthAdapter.login(params)
       .then(user => {
-        if(!user.error){
+        if(user.jwt){
           this.setState({
             auth: {
               isLoggedIn: true,
