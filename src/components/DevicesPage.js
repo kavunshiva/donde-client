@@ -9,7 +9,6 @@ import { DevicesAdapter } from '../adapters'
 const DevicesPage = (props) => {
   const { user, devices, getPositions, createDevice, updateDevice, deleteDevice } = props
 
-
   return (
     <div className="row">
       <div className="col-md-4">
