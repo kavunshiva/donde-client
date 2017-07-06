@@ -16,7 +16,7 @@ const DeviceDetail = (props) => {
         <PositionsMap center={{lat: 40.7255944265592, lng: -73.9446377360189}}
                       zoom={11}
                       apiKey={`AIzaSyBGfiK9HHMGDWC_cWg11K1Bxo8n8ggd8vM`}
-                      style={{}} />
+                      style={{width: "100%", height: "400px"}} />
       </div>
       <Link to={`/devices/${device.id}/edit`}>Update This Device</Link><br/>
       <Link to="/" onClick={() => deleteDevice(device)}>Delete This Device</Link>
