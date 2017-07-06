@@ -24,8 +24,12 @@ export class AuthAdapter {
 
 export class DevicesAdapter {
   static getDevicesByUser(user){
+    const updatedHeaders = headers
+    if(!headers.Authorization && user.jwt){
+      updatedHeaders.Authorization = user.jwt
+    }
     return fetch(`${baseUrl}/users/${user.id}/devices`, {
-      headers: headers
+      headers: updatedHeaders
     }).then(res => res.json())
   }
 

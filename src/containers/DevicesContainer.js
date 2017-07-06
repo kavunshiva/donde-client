@@ -22,20 +22,20 @@ export default class DevicesContainer extends Component {
   }
 
   getPositions(d){
-    DevicesAdapter.getPositions(d)
-      .then(positions => {
-        const devices = this.state.devices.map(device => {
-          if(device.id === d.id){
-            d.positions = positions
-            return d
-          } else {
-            return device
-          }
+      DevicesAdapter.getPositions(d)
+        .then(positions => {
+          const devices = this.state.devices.map(device => {
+            if(device.id === d.id){
+              d.positions = positions
+              return d
+            } else {
+              return device
+            }
+          })
+          this.setState({
+            devices: devices
+          })
         })
-        this.setState({
-          devices: devices
-        })
-      })
   }
 
   createDevice(device){
