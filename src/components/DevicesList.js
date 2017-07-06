@@ -2,11 +2,10 @@ import React from 'react'
 import { Link, Switch, Route } from 'react-router-dom'
 
 const DevicesList = (props) => {
-  console.log("je suis device")
   return (
     <div>
       <div>
-        {props.devices.map(device => <div key={device.id}><Link to={`/devices/${device.id}`}><strong><em>{device.device_name}</em></strong></Link><br/></div>)}
+        {props.devices && !props.devices.error ? props.devices.map(device => <div key={device.id}><Link to={`/devices/${device.id}`}><strong><em>{device.device_name}</em></strong></Link><br/></div>) : null}
       </div>
       <div>
         <Switch>
