@@ -44,10 +44,11 @@ class App extends Component {
   }
 
   componentDidMount(){
-    if(!!localStorage.getItem('jwt')){
+    if(localStorage.getItem('jwt')){
       AuthAdapter.currentUser()
         .then(user => {
           if(!user.error){
+            user.jwt = localStorage.getItem('jwt')
             this.setState({
               auth: {
                 isLoggedIn: true,
