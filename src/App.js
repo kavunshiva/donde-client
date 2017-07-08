@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter, Route } from 'react-router-dom'
 import logo from './logo.svg'
 import './App.css'
 import { AuthAdapter } from './adapters'
@@ -16,6 +17,7 @@ class App extends Component {
       }
     }
     this.login = this.login.bind(this)
+    this.redirectToLogin = this.redirectToLogin.bind(this)
   }
 
   login(params){
@@ -57,17 +59,25 @@ class App extends Component {
             })
           }
         })
+    } else {
+      this.redirectToLogin()
     }
   }
 
+  redirectToLogin(){
+    this.props.history.push('/login')
+  }
+
   render() {
+    const { isLoggedIn, user } = this.state.auth
     return (
       <div>
-        <NavBar isLoggedIn={this.state.auth.isLoggedIn} logout={this.logout} />
-        {this.state.auth.isLoggedIn ? <DevicesContainer user={this.state.auth.user} /> : <LoginForm onSubmit={this.login} /> }
+        {!isLoggedIn ? <Route path="/" action={this.redirectToLogin} /> : null}
+        <NavBar isLoggedIn={isLoggedIn} logout={this.logout} />
+        {isLoggedIn ? <DevicesContainer user={user} /> : <LoginForm onSubmit={this.login} /> }
       </div>
     );
   }
 }
 
-export default App
+export default withRouter(App)

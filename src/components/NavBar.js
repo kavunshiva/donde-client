@@ -1,22 +1,56 @@
-import React from 'react'
-
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import { Menu } from 'semantic-ui-react'
 
-const NavBar = (props) => {
-  const { isLoggedIn, logout } = props
-  return (
-    <nav className={`navbar navbar-inverse bg-primary`}>
-      <div className='container-fluid'>
-        <div className='navbar-header'>
-          <Link to="/" className='navbar-brand'>¿Dónde?</Link>
-        </div>
-        <ul className="nav navbar-nav">
-          <li><Link to="/devices">Devices</Link></li>
-          {isLoggedIn ? <li><Link to="/" onClick={() => logout()}>Logout</Link></li> : <li><Link to="/login">Login</Link></li>}
-        </ul>
-      </div>
-    </nav>
-  )
+
+class NavBar extends Component {
+  constructor(){
+    super()
+    this.state = {
+      activeComponent: ''
+    }
+    this.handleClick = this.handleClick.bind(this)
+  }
+
+  handleClick(e, { name }){
+    if (this.props.isLoggedIn){
+      this.setState({
+        activeComponent: name
+      })
+    } else {
+      e.preventDefault()
+    }
+  }
+
+  render(){
+    const { isLoggedIn, logout } = this.props
+    const { activeComponent } = this.state
+    return (
+      <Menu>
+          <Menu.Item name="header"
+                     active={activeComponent === "header"}
+                     header>
+            <Link to="/">¿Dónde?</Link>
+          </Menu.Item>
+          {isLoggedIn ? <Menu.Item name="devices"
+                                   onClick={this.handleClick}
+                                   active={activeComponent === "devices"}>
+                          <Link to="/devices">Devices</Link>
+                        </Menu.Item> : null
+          }
+          {isLoggedIn ? <Menu.Item name="logout" position='right'>
+                          <Link to="/" onClick={() => logout()}>Logout</Link>
+                        </Menu.Item> :
+                        <Menu.Item name="login"
+                                   onClick={this.handleClick}
+                                   active={activeComponent === "login"}
+                                   position='right'>
+                          <Link to="/login">Login</Link>
+                        </Menu.Item>
+          }
+      </Menu>
+    )
+  }
 }
 
 export default NavBar
