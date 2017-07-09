@@ -32,6 +32,7 @@ class App extends Component {
           })
           localStorage.setItem('jwt', user.jwt)
         }
+        this.props.history.push('/devices')
       })
   }
 
@@ -73,7 +74,7 @@ class App extends Component {
     return (
       <div>
         {!isLoggedIn ? <Route path="/" action={this.redirectToLogin} /> : null}
-        <NavBar isLoggedIn={isLoggedIn} logout={this.logout} />
+        <NavBar isLoggedIn={isLoggedIn} user={user} logout={this.logout} />
         {isLoggedIn ? <DevicesContainer user={user} /> : <LoginForm onSubmit={this.login} /> }
       </div>
     );

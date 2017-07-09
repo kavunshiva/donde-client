@@ -33,21 +33,30 @@ class NavBar extends Component {
                      header>
             <Link to="/">¿Dónde?</Link>
           </Menu.Item>
-          {isLoggedIn ? <Menu.Item name="devices"
-                                   onClick={this.handleClick}
-                                   active={activeComponent === "devices"}>
-                          <Link to="/devices">Devices</Link>
-                        </Menu.Item> : null
+          {isLoggedIn ?
+            <Menu.Item name="devices"
+                       onClick={this.handleClick}
+                       active={activeComponent === "devices"}>
+              <Link to="/devices">Devices</Link>
+            </Menu.Item> : null
           }
-          {isLoggedIn ? <Menu.Item name="logout" position='right'>
-                          <Link to="/" onClick={() => logout()}>Logout</Link>
-                        </Menu.Item> :
-                        <Menu.Item name="login"
-                                   onClick={this.handleClick}
-                                   active={activeComponent === "login"}
-                                   position='right'>
-                          <Link to="/login">Login</Link>
-                        </Menu.Item>
+          {isLoggedIn ?
+            <Menu.Menu position="right">
+              <Menu.Item name="username"
+                         onClick={this.handleClick}
+                         active={activeComponent === "username"}>
+                {this.props.user.username}
+              </Menu.Item>
+              <Menu.Item name="logout" position="right">
+                <Link to="/" onClick={() => logout()}>Logout</Link>
+              </Menu.Item>
+            </Menu.Menu> :
+            <Menu.Item name="login"
+                       onClick={this.handleClick}
+                       active={activeComponent === "login"}
+                       position="right">
+              <Link to="/login">Login</Link>
+            </Menu.Item>
           }
       </Menu>
     )

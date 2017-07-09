@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button, Form, Modal} from 'semantic-ui-react'
 
 export default class DeviceForm extends Component {
   constructor(props){
@@ -34,15 +35,21 @@ export default class DeviceForm extends Component {
 
   render(){
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label>Device ID</label>
-        <input type="text" name="device_name" value={this.state.device_name} onChange={this.handleChange} /><br/>
-        <label>Device Key</label>
-        <input type="password" name="password" value={this.state.password} onChange={this.handleChange} /><br/>
-        <label>Device Key Confirmation</label>
-        <input type="password" name="password_confirmation" value={this.state.password_confirmation} onChange={this.handleChange} /><br/>
-        <input type="submit" value={this.props.submitText} />
-      </form>
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Field>
+          <label>Device ID</label>
+          <input type="text" name="device_name" value={this.state.device_name} onChange={this.handleChange} /><br/>
+        </Form.Field>
+        <Form.Field>
+          <label>Device Key</label>
+          <input type="password" name="password" value={this.state.password} onChange={this.handleChange} /><br/>
+        </Form.Field>
+        <Form.Field>
+          <label>Device Key Confirmation</label>
+          <input type="password" name="password_confirmation" value={this.state.password_confirmation} onChange={this.handleChange} /><br/>
+        </Form.Field>
+        <Button type="submit">{this.props.submitText}</Button>
+      </Form>
     )
   }
 }

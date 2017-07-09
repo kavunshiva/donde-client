@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import PositionsMap from './PositionsMap'
-import { Button, Grid, Menu, Segment } from 'semantic-ui-react'
+import { Button, Menu, Segment } from 'semantic-ui-react'
 
 const DeviceDetail = (props) => {
   const { device, getPositions, deleteDevice } = props
