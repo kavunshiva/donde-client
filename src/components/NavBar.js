@@ -28,6 +28,7 @@ class NavBar extends Component {
     return (
       <Menu>
           <Menu.Item name="header"
+                     onClick={this.handleClick}
                      active={activeComponent === "header"}
                      header>
             <Link to="/">¿Dónde?</Link>
