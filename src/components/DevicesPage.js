@@ -11,7 +11,7 @@ const DevicesPage = (props) => {
   const { user, devices, getPositions, createDevice, updateDevice, deleteDevice } = props
 
   return (
-    <Grid>
+    <Grid stackable columns={2}>
       <Grid.Column width={4}>
         <Route path="/devices" render={() => <DevicesList devices={devices} />} />
       </Grid.Column>

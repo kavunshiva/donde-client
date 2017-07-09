@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import PositionsMap from './PositionsMap'
-import { Segment } from 'semantic-ui-react'
+import { Button, Grid, Menu, Segment } from 'semantic-ui-react'
 
 const DeviceDetail = (props) => {
   const { device, getPositions, deleteDevice } = props
@@ -29,10 +29,12 @@ const DeviceDetail = (props) => {
       <div className="col-md-6">
         {renderMapIfPositionsPresent()}
       </div>
-      <Link to={`/devices/${device.id}/edit`}>Update This Device</Link><br/>
-      <Link to="/" onClick={() => deleteDevice(device)}>Delete This Device</Link>
+      <Button.Group widths="2">
+        <Button color="blue" onClick={() => props.history.push(`/devices/${device.id}/edit`)}>Update This Device</Button>
+        <Button to="/" onClick={() => deleteDevice(device)} color="red">Delete This Device</Button>
+      </Button.Group>
     </div>
   )
 }
 
-export default DeviceDetail
+export default withRouter(DeviceDetail)

@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import { DevicesAdapter } from '../adapters'
 import DevicesPage from '../components/DevicesPage'
 
-export default class DevicesContainer extends Component {
+class DevicesContainer extends Component {
   constructor(){
     super()
     this.state = {
@@ -47,6 +48,7 @@ export default class DevicesContainer extends Component {
             devices: [...this.state.devices, device]
           })
         }
+        this.props.history.push(`/devices/${device.id}`)
       })
   }
 
@@ -68,21 +70,23 @@ export default class DevicesContainer extends Component {
             }
           })
         }
+        this.props.history.push(`/devices/${updatedDevice.id}`)
       })
   }
 
   deleteDevice(device){
     DevicesAdapter.destroy(device)
       .then(destroyedDevice => {
-          this.setState(() => {
-            const devices = this.state.devices.filter(device => {
-              device.id !== destroyedDevice.id
-            })
-            return {
-              devices: devices
-            }
+        this.setState(() => {
+          const devices = this.state.devices.filter(device => {
+            return device.id !== destroyedDevice.id
           })
+          return {
+            devices: devices
+          }
         })
+        this.props.history.push(`/devices`)
+      })
   }
 
   render(){
@@ -98,3 +102,5 @@ export default class DevicesContainer extends Component {
     )
   }
 }
+
+export default withRouter(DevicesContainer)

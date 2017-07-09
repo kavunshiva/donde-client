@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Link, Switch, Route } from 'react-router-dom'
-import { Menu } from 'semantic-ui-react'
+import { Link, Switch, Route, withRouter } from 'react-router-dom'
+import { Button, Menu } from 'semantic-ui-react'
 
 class DevicesList extends Component {
   constructor(){
@@ -33,15 +33,13 @@ class DevicesList extends Component {
             }) : null
           }
         </Menu>
-        <div>
-          <Switch>
-            <Route path='/devices/new' />
-            <Route render={() => <Link to="/devices/new">Add New Device</Link> } />
-          </Switch>
-        </div>
+        <Switch>
+          <Route path='/devices/new' />
+            <Route render={() => <Button onClick={() => this.props.history.push(`/devices/new`) } color="teal" fluid>Add New Device</Button>} />
+        </Switch>
       </div>
     )
   }
 }
 
-export default DevicesList
+export default withRouter(DevicesList)
