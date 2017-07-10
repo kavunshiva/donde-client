@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { withRouter, Route } from 'react-router-dom'
 import logo from './logo.svg'
 import './App.css'
-import { AuthAdapter } from './adapters'
+import { AuthAdapter, UsersAdapter } from './adapters'
 import LoginForm from './components/LoginForm'
 import DevicesContainer from './containers/DevicesContainer'
 import NavBar from './components/NavBar'
@@ -16,24 +16,40 @@ class App extends Component {
         user: {}
       }
     }
+    this.setUser = this.setUser.bind(this)
     this.login = this.login.bind(this)
     this.redirectToLogin = this.redirectToLogin.bind(this)
   }
 
-  login(params){
-    AuthAdapter.login(params)
-      .then(user => {
-        if(user.jwt){
-          this.setState({
-            auth: {
-              isLoggedIn: true,
-              user: user
-            }
-          })
-          localStorage.setItem('jwt', user.jwt)
+  setUser(user){
+    if(user.jwt){
+      this.setState({
+        auth: {
+          isLoggedIn: true,
+          user: user
         }
-        this.props.history.push('/devices')
       })
+      localStorage.setItem('jwt', user.jwt)
+      this.props.history.push('/devices')
+    }
+  }
+
+  login(params){
+    if(params.password_confirmation === ''){
+      const loginParams = {
+        username: params.username,
+        password: params.password
+      }
+      AuthAdapter.login(loginParams)
+        .then(user => {
+          this.setUser(user)
+        })
+    } else {
+      UsersAdapter.signup(params)
+        .then(user => {
+          this.setUser(user)
+        })
+    }
   }
 
   logout(){

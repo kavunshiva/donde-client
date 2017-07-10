@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Route } from 'react-router-dom'
 import { Form, Button } from 'semantic-ui-react'
 
 export default class LoginForm extends Component {
@@ -6,7 +7,8 @@ export default class LoginForm extends Component {
     super()
     this.state = {
       username: '',
-      password: ''
+      password: '',
+      password_confirmation: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
@@ -38,7 +40,18 @@ export default class LoginForm extends Component {
           <label>Password</label>
           <input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
         </Form.Field>
-        <Button type="submit">Login</Button>
+        <Route path="/signup" render={() => {
+          return (
+            <Form.Field>
+              <label>Password Confirmation</label>
+              <input type="password" name="password_confirmation" value={this.state.password_confirmation} onChange={this.handleChange} />
+            </Form.Field>
+          )
+        }}/>
+        <Button type="submit">
+          <Route path="/signup" render={() => <div>Sign Up</div>}/>
+          <Route path="/login" render={() => <div>Login</div>} />
+        </Button>
       </Form>
     )
   }

@@ -15,10 +15,29 @@ export class AuthAdapter {
     }).then(res => res.json())
   }
 
+  static signup(params){
+    return fetch(`${baseUrl}/signup`, {
+      method: 'post',
+      headers: headers(),
+      body: JSON.stringify(params)
+    }).then(res => res.json())
+  }
+
   static currentUser(){
     return fetch(`${baseUrl}/current_user`, {
       headers: headers()
     }).then(res => res.json())
+  }
+}
+
+export class UsersAdapter {
+  static signup(user){
+    return fetch(`${baseUrl}/users`,{
+      method: 'POST',
+      headers: headers(),
+      body: JSON.stringify({user: user})
+    })
+      .then(res => res.json())
   }
 }
 

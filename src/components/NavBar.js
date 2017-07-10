@@ -13,20 +13,16 @@ class NavBar extends Component {
   }
 
   handleClick(e, { name }){
-    if (this.props.isLoggedIn){
-      this.setState({
-        activeComponent: name
-      })
-    } else {
-      e.preventDefault()
-    }
+    this.setState({
+      activeComponent: name
+    })
   }
 
   render(){
     const { isLoggedIn, logout } = this.props
     const { activeComponent } = this.state
     return (
-      <Menu>
+      <Menu tabular>
           <Menu.Item name="header"
                      onClick={this.handleClick}
                      active={activeComponent === "header"}
@@ -51,12 +47,18 @@ class NavBar extends Component {
                 <Link to="/" onClick={() => logout()}>Logout</Link>
               </Menu.Item>
             </Menu.Menu> :
-            <Menu.Item name="login"
-                       onClick={this.handleClick}
-                       active={activeComponent === "login"}
-                       position="right">
-              <Link to="/login">Login</Link>
-            </Menu.Item>
+            <Menu.Menu position="right">
+              <Menu.Item name="signup"
+                onClick={this.handleClick}
+                active={activeComponent === "signup"}>
+                <Link to="/signup">Sign Up</Link>
+              </Menu.Item>
+              <Menu.Item name="login"
+                onClick={this.handleClick}
+                active={activeComponent === "login"}>
+                <Link to="/login">Login</Link>
+              </Menu.Item>
+            </Menu.Menu>
           }
       </Menu>
     )
