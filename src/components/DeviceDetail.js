@@ -1,7 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import PositionsMap from './PositionsMap'
-import { Button, Menu, Segment } from 'semantic-ui-react'
+import { Button, Header, Icon, Menu, Modal, Segment } from 'semantic-ui-react'
 
 const DeviceDetail = (props) => {
   const { device, getPositions, deleteDevice } = props
@@ -21,6 +21,22 @@ const DeviceDetail = (props) => {
       return null
     }
   }
+  const deleteConfirmation = () => (
+    <Modal trigger={<Button color="red">Delete This Device</Button>} basic size="small">
+      <Header icon="delete" content="delete device" />
+      <Modal.Content>
+        <p>Are you sure you want to delete this device?</p>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button onClick={() => props.history.push(`/devices`)} basic color='red' inverted>
+          <Icon name='remove' /> No
+        </Button>
+        <Button onClick={() => deleteDevice(device)} color='green' inverted>
+          <Icon name='checkmark' /> Yes
+        </Button>
+      </Modal.Actions>
+    </Modal>
+  )
 
   return (
     <div>
@@ -31,7 +47,7 @@ const DeviceDetail = (props) => {
       </div>
       <Button.Group widths="2">
         <Button color="blue" onClick={() => props.history.push(`/devices/${device.id}/edit`)}>Update This Device</Button>
-        <Button to="/" onClick={() => deleteDevice(device)} color="red">Delete This Device</Button>
+        {deleteConfirmation()}
       </Button.Group>
     </div>
   )
