@@ -9,8 +9,8 @@ const DeviceDetail = (props) => {
     if(device.positions && !device.positions.error){
       return (
         <Segment>
-          <PositionsMap center={{lat: 40.7255944265592, lng: -73.9446377360189}}
-                        zoom={8}
+          <PositionsMap center={{lat: 40.731408, lng: -74.0127797}}
+                        zoom={12}
                         apiKey={`AIzaSyBGfiK9HHMGDWC_cWg11K1Bxo8n8ggd8vM`}
                         style={{width: "100%", height: "400px"}}
                         device={device} />
