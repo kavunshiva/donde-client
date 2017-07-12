@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
 import { Link, Switch, Route, withRouter } from 'react-router-dom'
-import { Button, Menu } from 'semantic-ui-react'
+import { Button, Menu, Search } from 'semantic-ui-react'
 
 class DevicesList extends Component {
   constructor(){
     super()
     this.state = {
-      activeItem: ''
+      activeItem: '',
+      searchTerm: ''
     }
     this.handleItemClick = this.handleItemClick.bind(this)
+    this.handleSearchChange = this.handleSearchChange.bind(this)
   }
 
   handleItemClick(e, { name }){
@@ -17,12 +19,20 @@ class DevicesList extends Component {
     })
   }
 
+  handleSearchChange(e){
+    this.setState({
+      searchTerm: e.target.value
+    })
+  }
+
   render(){
     return (
       <div>
         {this.props.devices && this.props.devices.length > 0 ?
           <Menu fluid vertical tabular>
-            {this.props.devices.map(device => {
+            <Search onSearchChange={this.handleSearchChange} showNoResults={false} fluid/>
+            {this.props.devices.filter(device => device.device_name.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
+              .map(device => {
                 return (
                   <Menu.Item key={device.id} name={device.id} active={this.state.activeItem === device.id} onClick={this.handleItemClick}>
                     <Link to={`/devices/${device.id}`}>

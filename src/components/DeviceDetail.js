@@ -5,6 +5,7 @@ import { Button, Header, Icon, Menu, Modal, Segment } from 'semantic-ui-react'
 
 const DeviceDetail = (props) => {
   const { device, getPositions, deleteDevice } = props
+
   const renderMapIfPositionsPresent = () => {
     if(device.positions && !device.positions.error){
       return (

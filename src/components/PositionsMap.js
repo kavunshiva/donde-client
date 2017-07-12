@@ -32,7 +32,6 @@ const PositionsMap = (props) => {
   return (
     <GoogleMapReact defaultCenter={props.center} defaultZoom={props.zoom} apiKey={props.apiKey} style={props.style} yesIWantToUseGoogleMapApiInternals={true}>
       {renderPositions()}
-      {}
     </GoogleMapReact>
   )
 }
