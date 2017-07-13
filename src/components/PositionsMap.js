@@ -1,4 +1,5 @@
 import React from 'react'
+import { Popup } from 'semantic-ui-react'
 import GoogleMapReact from 'google-map-react'
 
 const PositionsMap = (props) => {
@@ -21,10 +22,18 @@ const PositionsMap = (props) => {
 
   const renderPositions = (props) => {
     return device.positions.map(position => {
+      const [date, time] = position.time.replace(new RegExp('(\....Z)'), '').split('T')
       return (
-        <svg key={position.id} height={size} width={size} lat={position.lat} lng={position.long} style={centerMarker(size)}>
-          <circle cx={size/2} cy={size/2} r={size/2 - strokeWidth} stroke="black" stroke-width={strokeWidth} fill="red" />
-        </svg>
+        <Popup key={position.id}
+               lat={position.lat}
+               lng={position.long}
+               header={date}
+               content={<div>{`time: ${time}`}<br/>{`latitude: ${position.lat}`}<br/>{`longitude: ${position.long}`}<br/>{`altitude: ${position.alt}`}</div>}
+               trigger={
+                <svg height={size} width={size} style={centerMarker(size)}>
+                  <circle cx={size/2} cy={size/2} r={size/2 - strokeWidth} stroke="black" stroke-width={strokeWidth} fill="red" />
+                </svg>
+        } />
       )
     })
   }
